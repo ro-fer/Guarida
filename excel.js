@@ -47,12 +47,12 @@ async function processFile() {
             console.log('Datos del archivo Excel:', jsonData);
 
             // Filtrar las filas según el listado de códigos a remover
-        jsonData = jsonData.filter(row => {
-            console.log('Códigos a remover:', codesToRemove);
-            console.log('Código de la fila:', row.Codigo);
-            // Comparar los códigos después de eliminar espacios en blanco adicionales
-            return !codesToRemove.includes(row.Codigo.trim());
-        });
+            jsonData = jsonData.filter(row => {
+                console.log('Códigos a remover:', codesToRemove);
+                console.log('Código de la fila:', row.Codigo);
+                // Comparar los códigos después de eliminar espacios en blanco adicionales
+                return !codesToRemove.includes(row.Codigo.trim());
+            });
 
             // Crear un único vector con repeticiones según la cantidad de los códigos
             const codigos_sirven = [];

@@ -19,7 +19,7 @@ async function processFile() {
         const file = fileInput.files[0];
         const clientName = clientNameInput.value.trim();
 
-       if (!file) {
+        if (!file) {
             throw new Error('Seleccione el archivo primero!');
         }
         if (!clientName) {
@@ -27,7 +27,8 @@ async function processFile() {
         }
 
         // Cargar los archivos JSON
-        const codesToRemove = await loadJSON('./codigos_sacar.json');
+        const jsonCodesToRemove = await loadJSON('./codigos_sacar.json');
+        const codesToRemove = jsonCodesToRemove.Codigo;
         console.log('Códigos a remover:', codesToRemove);
 
         const codesDescriptions = await loadJSON('./codigos_descripcion.json');
@@ -48,7 +49,6 @@ async function processFile() {
             jsonData = jsonData.filter(row => {
                 console.log('Códigos a remover:', codesToRemove);
                 console.log('Código de la fila:', row.Codigo);
-                console.log(typeof row.Codigo, row.Codigo);
                 // Comparar los códigos después de eliminar espacios en blanco adicionales
                 return !codesToRemove.includes(row.Codigo.trim());
             });

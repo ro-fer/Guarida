@@ -19,7 +19,7 @@ async function processFile() {
         const file = fileInput.files[0];
         const clientName = clientNameInput.value.trim();
 
-        if (!file) {
+       if (!file) {
             throw new Error('Seleccione el archivo primero!');
         }
         if (!clientName) {
@@ -46,11 +46,10 @@ async function processFile() {
 
             // Filtrar las filas según el listado de códigos a remover
             jsonData = jsonData.filter(row => {
-                console.log('Código de la fila:', row.Codigo);
-                console.log('Cantidad de la fila:', row.Cantidad);
                 console.log('Códigos a remover:', codesToRemove);
                 console.log('Código de la fila:', row.Codigo);
-                return !codesToRemove.includes(row.Codigo);
+                // Comparar los códigos después de eliminar espacios en blanco adicionales
+                return !codesToRemove.includes(row.Codigo.trim());
             });
 
             // Crear un único vector con repeticiones según la cantidad de los códigos

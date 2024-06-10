@@ -81,3 +81,4 @@ async function processFile() {
         // Puedes mostrar un mensaje de error al usuario si lo deseas
     }
 }
+console.log('Probando');

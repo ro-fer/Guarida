@@ -28,7 +28,8 @@ async function processFile() {
 
         // Cargar los archivos JSON
         const jsonCodesToRemove = await loadJSON('./codigos_sacar.json');
-        const codesToRemove = jsonCodesToRemove.Codigo;
+        // Extraer el array de códigos del objeto jsonCodesToRemove
+        const codesToRemove = Object.values(jsonCodesToRemove)[0];
         console.log('Códigos a remover:', codesToRemove);
 
         const codesDescriptions = await loadJSON('./codigos_descripcion.json');
@@ -46,12 +47,12 @@ async function processFile() {
             console.log('Datos del archivo Excel:', jsonData);
 
             // Filtrar las filas según el listado de códigos a remover
-            jsonData = jsonData.filter(row => {
-                console.log('Códigos a remover:', codesToRemove);
-                console.log('Código de la fila:', row.Codigo);
-                // Comparar los códigos después de eliminar espacios en blanco adicionales
-                return !codesToRemove.includes(row.Codigo.trim());
-            });
+        jsonData = jsonData.filter(row => {
+            console.log('Códigos a remover:', codesToRemove);
+            console.log('Código de la fila:', row.Codigo);
+            // Comparar los códigos después de eliminar espacios en blanco adicionales
+            return !codesToRemove.includes(row.Codigo.trim());
+        });
 
             // Crear un único vector con repeticiones según la cantidad de los códigos
             const codigos_sirven = [];

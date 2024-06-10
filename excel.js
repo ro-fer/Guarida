@@ -48,6 +48,8 @@ async function processFile() {
             jsonData = jsonData.filter(row => {
                 console.log('Código de la fila:', row.Codigo);
                 console.log('Cantidad de la fila:', row.Cantidad);
+                console.log('Códigos a remover:', codesToRemove);
+                console.log('Código de la fila:', row.Codigo);
                 return !codesToRemove.includes(row.Codigo);
             });
 

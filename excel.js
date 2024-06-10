@@ -48,6 +48,7 @@ async function processFile() {
             jsonData = jsonData.filter(row => {
                 console.log('Códigos a remover:', codesToRemove);
                 console.log('Código de la fila:', row.Codigo);
+                console.log(typeof row.Codigo, row.Codigo);
                 // Comparar los códigos después de eliminar espacios en blanco adicionales
                 return !codesToRemove.includes(row.Codigo.trim());
             });

@@ -60,26 +60,18 @@ async function processFile() {
                 });
             }
 
-            // Convertir JSON de nuevo a una hoja de trabajo
-            const newWorksheet = XLSX.utils.json_to_sheet(newData);
+            // Generar el archivo CSV
+            let csvContent = "data:text/csv;charset=utf-8,";
+            csvContent += "Imagen 1,Imagen 2\n";
+            newData.forEach(row => {
+                csvContent += `${row["Imagen 1"]},${row["Imagen 2"]}\n`;
+            });
 
-            // Modificar el encabezado de la hoja de trabajo
-            newWorksheet['A1'] = { v: 'Imagen 1', t: 's' };
-            newWorksheet['B1'] = { v: 'Imagen 2', t: 's' };
-
-            // Crear un nuevo libro de trabajo y añadir la nueva hoja
-            const newWorkbook = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(newWorkbook, newWorksheet, firstSheetName);
-
-            // Generar una cadena binaria del libro de trabajo
-            const newExcelData = XLSX.write(newWorkbook, { bookType: 'xlsx', type: 'array' });
-
-            // Crear un Blob a partir de la cadena binaria y crear un enlace de descarga
-            const blob = new Blob([newExcelData], { type: 'application/octet-stream' });
-            const url = URL.createObjectURL(blob);
+            // Crear un enlace de descarga para el archivo CSV
+            const encodedUri = encodeURI(csvContent);
             const downloadLink = document.getElementById('downloadLink');
-            downloadLink.href = url;
-            downloadLink.download = 'pedido_mayorista.xlsx';
+            downloadLink.href = encodedUri;
+            downloadLink.download = 'pedido_mayorista.csv';
             downloadLink.style.display = 'block';
             downloadLink.innerText = 'Archivo terminado!';
         };

@@ -1,13 +1,13 @@
-async function loadCodes() {
+async function loadJSON(file) {
     try {
-        const response = await fetch('./codigos_sacar.json');
+        const response = await fetch(file);
         if (!response.ok) {
-            throw new Error('Failed to load JSON: ' + response.statusText);
+            throw new Error(`Failed to load JSON from ${file}: ` + response.statusText);
         }
         const data = await response.json();
-        return data.Codigo;
+        return data;
     } catch (error) {
-        console.error('Error loading codes:', error);
+        console.error(`Error loading JSON from ${file}:`, error);
         throw error;
     }
 }
@@ -26,7 +26,8 @@ async function processFile() {
             throw new Error('Ingrese el nombre del cliente!');
         }
 
-        const codesToRemove = await loadCodes();
+        const codesToRemove = await loadJSON('./codigos_sacar.json');
+        const codesDescriptions = await loadJSON('./codigos_descripcion.json');
 
         const reader = new FileReader();
         reader.onload = function(event) {
@@ -49,14 +50,17 @@ async function processFile() {
                 }
             });
 
-            // Crear newData para almacenar los códigos en las columnas "Imagen 1" y "Imagen 2"
+            // Reemplazar los códigos por sus descripciones
+            const descripciones = codigos_sirven.map(codigo => codesDescriptions[codigo] || codigo);
+
+            // Crear newData para almacenar las descripciones en las columnas "Imagen 1" y "Imagen 2"
             const newData = [];
-            for (let i = 0; i < codigos_sirven.length; i += 2) {
-                const codigo1 = codigos_sirven[i] || '';
-                const codigo2 = codigos_sirven[i + 1] || '';
+            for (let i = 0; i < descripciones.length; i += 2) {
+                const descripcion1 = descripciones[i] || '';
+                const descripcion2 = descripciones[i + 1] || '';
                 newData.push({
-                    "Imagen 1": codigo1,
-                    "Imagen 2": codigo2
+                    "Imagen 1": descripcion1,
+                    "Imagen 2": descripcion2
                 });
             }
 
@@ -81,4 +85,3 @@ async function processFile() {
         // Puedes mostrar un mensaje de error al usuario si lo deseas
     }
 }
-console.log('Probando');

@@ -26,7 +26,10 @@ async function processFile() {
             throw new Error('Ingrese el nombre del cliente!');
         }
 
-        const codesToRemove = await loadJSON('./codigos_sacar.json');
+        // Cargar el archivo JSON de códigos a remover
+        const jsonCodigos = await loadJSON('./codigos_sacar.json');
+        const codesToRemove = jsonCodigos["Codigo"]; // Acceder al array de códigos
+
         const codesDescriptions = await loadJSON('./codigos_descripcion.json');
 
         const reader = new FileReader();

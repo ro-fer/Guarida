@@ -15,7 +15,9 @@ async function loadCodes() {
 async function processFile() {
     try {
         const fileInput = document.getElementById('fileInput');
+        const clientNameInput = document.getElementById('clientName');
         const file = fileInput.files[0];
+        const clientName = clientNameInput.value.trim();
 
         if (!file) {
             throw new Error('Seleccione el archivo primero!');
@@ -71,7 +73,7 @@ async function processFile() {
             const encodedUri = encodeURI(csvContent);
             const downloadLink = document.getElementById('downloadLink');
             downloadLink.href = encodedUri;
-            downloadLink.download = 'pedido_mayorista.csv';
+            downloadLink.download = `pedido_mayorista_${clientName}.csv`;
             downloadLink.style.display = 'block';
             downloadLink.innerText = 'Archivo terminado!';
         };

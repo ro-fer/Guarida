@@ -22,6 +22,9 @@ async function processFile() {
         if (!file) {
             throw new Error('Seleccione el archivo primero!');
         }
+        if (!clientName) {
+            throw new Error('Ingrese el nombre del cliente!');
+        }
 
         const codesToRemove = await loadCodes();
 
@@ -83,3 +86,4 @@ async function processFile() {
         // Puedes mostrar un mensaje de error al usuario si lo deseas
     }
 }
+

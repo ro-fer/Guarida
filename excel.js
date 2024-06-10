@@ -49,16 +49,11 @@ async function processFile() {
                 }
             });
 
-            // Dividir el vector en dos partes iguales
-            const mitad = Math.ceil(codigos_sirven.length / 2);
-            const codigos1 = codigos_sirven.slice(0, mitad);
-            const codigos2 = codigos_sirven.slice(mitad);
-
             // Crear newData para almacenar los códigos en las columnas "Imagen 1" y "Imagen 2"
             const newData = [];
-            for (let i = 0; i < Math.max(codigos1.length, codigos2.length); i++) {
-                const codigo1 = codigos1[i] || '';
-                const codigo2 = codigos2[i] || '';
+            for (let i = 0; i < codigos_sirven.length; i += 2) {
+                const codigo1 = codigos_sirven[i] || '';
+                const codigo2 = codigos_sirven[i + 1] || '';
                 newData.push({
                     "Imagen 1": codigo1,
                     "Imagen 2": codigo2
@@ -86,4 +81,3 @@ async function processFile() {
         // Puedes mostrar un mensaje de error al usuario si lo deseas
     }
 }
-

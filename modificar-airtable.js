@@ -67,13 +67,14 @@ async function getRecordIdByName(inicio) {
         }
 
         const data = await response.json();
+        console.log('Respuesta de getRecordIdByName:', data);
         if (data.records.length > 0) {
             return data.records[0].id;
         } else {
             return null;
         }
     } catch (error) {
-        console.error(error);
+        console.error('Error en getRecordIdByName:', error);
         return null;
     }
 }
@@ -98,7 +99,10 @@ async function updateRecord(recordId, fields) {
         if (!response.ok) {
             throw new Error('Error actualizando datos: ' + response.statusText);
         }
+
+        const responseData = await response.json();
+        console.log('Respuesta de updateRecord:', responseData);
     } catch (error) {
-        console.error(error);
+        console.error('Error en updateRecord:', error);
     }
 }

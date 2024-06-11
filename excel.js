@@ -39,13 +39,16 @@ async function processFile() {
         const jsonCodesDescriptions = await loadJSONFromAirtable('Codigos_Tazas');
         const jsonCodesToRemove = await loadJSONFromAirtable(TABLE_NAME);
 
-        // Extraer los arrays de códigos y descripciones
-        const codesToRemove = Object.values(jsonCodesToRemove)[0];
-        const codesDescriptions = jsonCodesDescriptions;
-        const codesDescripcion = jsonCodesDescriptions.map(row => ({
-            codigo: row['Codigo de la web'],
-            descripcion: row['Localizacion para sistema']
-        }));
+        // Verificar si jsonCodesDescriptions es un array antes de mapearlo
+        let codesDescriptions = [];
+        if (Array.isArray(jsonCodesDescriptions)) {
+            codesDescriptions = jsonCodesDescriptions.map(row => ({
+                codigo: row['Codigo de la web'],
+                descripcion: row['Localizacion para sistema']
+            }));
+        } else {
+            console.error('Los datos recibidos de Airtable no están en el formato esperado:', jsonCodesDescriptions);
+        }
 
         // Leer el archivo Excel
         const reader = new FileReader();

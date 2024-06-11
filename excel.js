@@ -31,10 +31,11 @@ async function processFile() {
         }
 
         // Cargar los datos de Airtable
+        const TABLE_NAME = 'Otros_Codigos';
         console.log('Pruebaaaa');
         const jsonCodesDescriptions = await loadJSONFromAirtable('Codigos_Tazas');
         console.log('Pruebaaaa');
-        const jsonCodesToRemove = await loadJSONFromAirtable('Otros_Codigos');
+        const jsonCodesToRemove = await loadJSONFromAirtable(TABLE_NAME);
        
 
         // Extraer los arrays de códigos y descripciones

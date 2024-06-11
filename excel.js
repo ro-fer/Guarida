@@ -1,3 +1,18 @@
+async function loadJSONFromAirtable(viewName) {
+    try {
+        const url = `https://api.airtable.com/v0/app4fXaIH5R6dmaY7/${viewName}?api_key=patuBqD5kRmv5Czb3.3606ec1cb081893073bc5ad358268413b886eb0a5ed1be2bf6e4e1c91d127a42`;
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error(`Failed to load JSON from Airtable view ${viewName}: ${response.statusText}`);
+        }
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error(`Error loading JSON from Airtable view ${viewName}:`, error);
+        throw error;
+    }
+}
+
 async function processFile() {
     try {
         const fileInput = document.getElementById('fileInput');
@@ -67,9 +82,9 @@ async function processFile() {
 
             // Generar el archivo CSV
             let csvContent = "data:text/csv;charset=utf-8,";
-            csvContent += "Imagen 1,Imagen 2\n";
+            csvContent += "Imagen1,Imagen2\n"; // Aquí se cambió "Imagen 1" y "Imagen 2"
             newData.forEach(row => {
-                csvContent += `${row["Imagen 1"]},${row["Imagen 2"]}\n`;
+                csvContent += `${row["Imagen 1"]},${row["Imagen 2"]}\n`; // Aquí se cambió "Imagen 1" y "Imagen 2"
             });
 
             // Crear un enlace de descarga para el archivo CSV
@@ -84,20 +99,5 @@ async function processFile() {
     } catch (error) {
         console.error('Error processing file:', error);
         // Puedes mostrar un mensaje de error al usuario si lo deseas
-    }
-}
-
-async function loadJSONFromAirtable(viewName) {
-    try {
-        const url = `https://api.airtable.com/v0/app4fXaIH5R6dmaY7/${viewName}?api_key=patuBqD5kRmv5Czb3.3606ec1cb081893073bc5ad358268413b886eb0a5ed1be2bf6e4e1c91d127a42`;
-        const response = await fetch(url);
-        if (!response.ok) {
-            throw new Error(`Failed to load JSON from Airtable view ${viewName}: ${response.statusText}`);
-        }
-        const data = await response.json();
-        return data;
-    } catch (error) {
-        console.error(`Error loading JSON from Airtable view ${viewName}:`, error);
-        throw error;
     }
 }

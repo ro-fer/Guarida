@@ -13,7 +13,7 @@ async function loadJSONFromAirtable(viewName) {
             throw new Error(`Failed to load JSON from Airtable view ${viewName}: ${response.statusText}`);
         }
         const data = await response.json();
-        console.log('Data from Airtable:', data);
+        console.log('Data from Airtable:', data); // Agregar esta línea para imprimir en la consola
         return data;
     } catch (error) {
         console.error(`Error loading JSON from Airtable view ${viewName}:`, error);
@@ -38,6 +38,11 @@ async function processFile() {
         // Cargar los datos de Airtable
         const jsonCodesDescriptions = await loadJSONFromAirtable('Codigos_Tazas');
         const jsonCodesToRemove = await loadJSONFromAirtable('Otros_Codigos');
+
+        // Verificar si jsonCodesDescriptions y jsonCodesToRemove contienen la propiedad records
+        if (!jsonCodesDescriptions.records || !jsonCodesToRemove.records) {
+            throw new Error('Los datos recibidos de Airtable no están en el formato esperado.');
+        }
 
         // Obtener arrays de códigos y descripciones
         const codesToRemove = jsonCodesToRemove.records.map(record => record.fields['Codigo a remover']);

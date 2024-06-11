@@ -10,6 +10,7 @@ async function loadJSONFromAirtable(viewName) {
         const data = await response.json();
         return data;
     } catch (error) {
+        console.log('Pruebaaaa');
         console.error(`Error loading JSON from Airtable view ${viewName}:`, error);
         throw error;
     }

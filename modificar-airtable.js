@@ -27,68 +27,30 @@ function processExcel() {
 // Función para actualizar Airtable
 async function updateAirtable(data) {
     for (let row of data) {
-        // Suponiendo que los nombres de las columnas en Excel son 'Inicio', 'Codigo de la web', 'Codigo de la web sin espacios', 'Formato', 'Localizacion para sistema'
-        const inicio = row['Inicio'];
         const codigoWeb = row['Codigo de la web'];
         const codigoWebSinEspacios = row['Codigo de la web sin espacios'];
         const formato = row['Formato'];
         const localizacion = row['Localizacion para sistema'];
 
-        // Obtener el ID del registro a actualizar
-        const recordId = await getRecordIdByName(inicio);
-        if (recordId) {
-            await updateRecord(recordId, {
-                'Codigo de la web': codigoWeb,
-                'Codigo de la web sin espacios': codigoWebSinEspacios,
-                'Formato': formato,
-                'Localizacion para sistema': localizacion
-            });
-        } else {
-            console.log(`Registro con nombre ${inicio} no encontrado.`);
-        }
+        await createRecord({
+            'Codigo de la web': codigoWeb,
+            'Codigo de la web sin espacios': codigoWebSinEspacios,
+            'Formato': formato,
+            'Localizacion para sistema': localizacion
+        });
     }
     alert('Datos actualizados con éxito');
 }
 
-// Función para obtener el ID del registro por nombre
-async function getRecordIdByName(inicio) {
-    const url = `https://api.airtable.com/v0/${BASE_ID}/${TABLE_NAME}?filterByFormula={Inicio}='${inicio}'`;
-
-    try {
-        const response = await fetch(url, {
-            method: 'GET',
-            headers: {
-                'Authorization': `Bearer ${TOKEN}`
-            }
-        });
-
-        if (!response.ok) {
-            throw new Error('Error obteniendo datos: ' + response.statusText);
-        }
-
-        const data = await response.json();
-        console.log('Respuesta de getRecordIdByName:', data);
-        if (data.records.length > 0) {
-            return data.records[0].id;
-        } else {
-            return null;
-        }
-    } catch (error) {
-        console.error('Error en getRecordIdByName:', error);
-        return null;
-    }
-}
-
-// Función para actualizar el registro
-async function updateRecord(recordId, fields) {
-    const url = `https://api.airtable.com/v0/${BASE_ID}/${TABLE_NAME}/${recordId}`;
+async function createRecord(fields) {
+    const url = `https://api.airtable.com/v0/${BASE_ID}/${TABLE_NAME}`;
     const data = {
         fields: fields
     };
 
     try {
         const response = await fetch(url, {
-            method: 'PATCH',
+            method: 'POST',
             headers: {
                 'Authorization': `Bearer ${TOKEN}`,
                 'Content-Type': 'application/json'
@@ -97,12 +59,12 @@ async function updateRecord(recordId, fields) {
         });
 
         if (!response.ok) {
-            throw new Error('Error actualizando datos: ' + response.statusText);
+            throw new Error('Error creando el registro: ' + response.statusText);
         }
 
         const responseData = await response.json();
-        console.log('Respuesta de updateRecord:', responseData);
+        console.log('Respuesta de createRecord:', responseData);
     } catch (error) {
-        console.error('Error en updateRecord:', error);
+        console.error('Error en createRecord:', error);
     }
 }

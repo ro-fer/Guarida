@@ -27,12 +27,14 @@ function processExcel() {
 // Función para actualizar Airtable
 async function updateAirtable(data) {
     for (let row of data) {
+        const inicio = row['Inicio']; // Agregar columna "Inicio"
         const codigoWeb = row['Codigo de la web'];
         const codigoWebSinEspacios = row['Codigo de la web sin espacios'];
         const formato = row['Formato'];
         const localizacion = row['Localizacion para sistema'];
 
         await createRecord({
+            'Inicio': inicio, // Agregar columna "Inicio"
             'Codigo de la web': codigoWeb,
             'Codigo de la web sin espacios': codigoWebSinEspacios,
             'Formato': formato,

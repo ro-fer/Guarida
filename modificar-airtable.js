@@ -1,4 +1,4 @@
-const TOKEN = 'patuBqD5kRmv5Czb3.02a0b6a38f7ce4c0c115fc6b3f4e13cdd90e62098cf062decff89fe33fc00149';
+const TOKEN = 'patuBqD5kRmv5Czb3.3606ec1cb081893073bc5ad358268413b886eb0a5ed1be2bf6e4e1c91d127a42';
 const BASE_ID = 'app4fXaIH5R6dmaY7';
 const TABLE_NAME = 'Codigos_Tazas';
 

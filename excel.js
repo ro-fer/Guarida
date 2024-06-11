@@ -30,8 +30,11 @@ async function processFile() {
         }
 
         // Cargar los datos de Airtable
-        const jsonCodesToRemove = await loadJSONFromAirtable('Otros_Codigos');
+        console.log('Pruebaaaa');
         const jsonCodesDescriptions = await loadJSONFromAirtable('Codigos_Tazas');
+        console.log('Pruebaaaa');
+        const jsonCodesToRemove = await loadJSONFromAirtable('Otros_Codigos');
+       
 
         // Extraer los arrays de códigos y descripciones
         const codesToRemove = Object.values(jsonCodesToRemove)[0];

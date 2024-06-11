@@ -13,6 +13,7 @@ async function loadJSONFromAirtable(viewName) {
             throw new Error(`Failed to load JSON from Airtable view ${viewName}: ${response.statusText}`);
         }
         const data = await response.json();
+        console.log('Data from Airtable:', data); // Agregar esta línea para imprimir en la consola
         return data;
     } catch (error) {
         console.error(`Error loading JSON from Airtable view ${viewName}:`, error);

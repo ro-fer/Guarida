@@ -13,7 +13,7 @@ async function loadJSONFromAirtable(viewName) {
             throw new Error(`Failed to load JSON from Airtable view ${viewName}: ${response.statusText}`);
         }
         const data = await response.json();
-        console.log('Data from Airtable:', data); // Agregar esta línea para imprimir en la consola
+        console.log('Data from Airtable:', data);
         return data;
     } catch (error) {
         console.error(`Error loading JSON from Airtable view ${viewName}:`, error);
@@ -36,14 +36,15 @@ async function processFile() {
         }
 
         // Cargar los datos de Airtable
-        const TABLE_NAME = 'Otros_Codigos';
         const jsonCodesDescriptions = await loadJSONFromAirtable('Codigos_Tazas');
-        const jsonCodesToRemove = await loadJSONFromAirtable(TABLE_NAME);
-    
-        // Verificar si jsonCodesDescriptions es un array antes de mapearlo
-        const codigo = jsonCodesDescriptions['Codigo de la web'];
-        const descripcion = jsonCodesDescriptions['Localizacion para sistema'];
+        const jsonCodesToRemove = await loadJSONFromAirtable('Otros_Codigos');
 
+        // Obtener arrays de códigos y descripciones
+        const codesToRemove = jsonCodesToRemove.records.map(record => record.fields['Codigo a remover']);
+        const codesDescriptions = jsonCodesDescriptions.records.map(record => ({
+            codigo: record.fields['Codigo de la web'],
+            descripcion: record.fields['Localizacion para sistema']
+        }));
 
         // Leer el archivo Excel
         const reader = new FileReader();
@@ -72,7 +73,10 @@ async function processFile() {
             });
 
             // Reemplazar los códigos por sus descripciones
-            const descripciones = codigos_sirven.map(codigo => codesDescriptions[codigo] || codigo);
+            const descripciones = codigos_sirven.map(codigo => {
+                const descripcionObj = codesDescriptions.find(item => item.codigo === codigo);
+                return descripcionObj ? descripcionObj.descripcion : '';
+            });
 
             // Crear newData para almacenar las descripciones en las columnas "Imagen 1" y "Imagen 2"
             const newData = [];

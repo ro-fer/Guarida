@@ -58,7 +58,7 @@ async function getRecordIdByName(inicio) {
         const response = await fetch(url, {
             method: 'GET',
             headers: {
-                'Authorization': TOKEN
+                'Authorization': `Bearer ${TOKEN}`
             }
         });
 

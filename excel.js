@@ -38,10 +38,11 @@ async function processFile() {
         const TABLE_NAME = 'Otros_Codigos';
         const jsonCodesDescriptions = await loadJSONFromAirtable('Codigos_Tazas');
         const jsonCodesToRemove = await loadJSONFromAirtable(TABLE_NAME);
-        console.log(jsonCodesDescriptions);
+    
         // Verificar si jsonCodesDescriptions es un array antes de mapearlo
         let codesDescriptions = [];
         if (Array.isArray(jsonCodesDescriptions)) {
+            console.log(jsonCodesDescriptions);
             codesDescriptions = jsonCodesDescriptions.map(row => ({
                 codigo: row['Codigo de la web'],
                 descripcion: row['Localizacion para sistema']

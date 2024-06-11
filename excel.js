@@ -1,17 +1,3 @@
-async function loadJSON(file) {
-    try {
-        const response = await fetch(file);
-        if (!response.ok) {
-            throw new Error(`Failed to load JSON from ${file}: ` + response.statusText);
-        }
-        const data = await response.json();
-        return data;
-    } catch (error) {
-        console.error(`Error loading JSON from ${file}:`, error);
-        throw error;
-    }
-}
-
 async function processFile() {
     try {
         const fileInput = document.getElementById('fileInput');
@@ -20,21 +6,26 @@ async function processFile() {
         const clientName = clientNameInput.value.trim();
 
         if (!file) {
-            throw new Error('Seleccione el archivo primero!');
+            throw new Error('¡Seleccione el archivo primero!');
         }
         if (!clientName) {
-            throw new Error('Ingrese el nombre del cliente!');
+            throw new Error('¡Ingrese el nombre del cliente!');
         }
 
-        // Cargar los archivos JSON
-        const jsonCodesToRemove = await loadJSON('./codigos_sacar.json');
-        // Extraer el array de códigos del objeto jsonCodesToRemove
+        // Cargar los datos de Airtable
+        const jsonCodesToRemove = await loadJSONFromAirtable('Otros_Codigos');
+        const jsonCodesDescriptions = await loadJSONFromAirtable('Codigos_Tazas');
+
+        // Extraer los arrays de códigos y descripciones
         const codesToRemove = Object.values(jsonCodesToRemove)[0];
-        console.log('Códigos a remover:', codesToRemove);
+        const codesDescriptions = jsonCodesDescriptions;
+        const codesDescripcion = jsonCodesDescriptions.map(row => ({
+            codigo: row['Codigo de la web'],
+            descripcion: row['Localizacion para sistema']
+        }));
 
-        const codesDescriptions = await loadJSON('./codigos_descripcion.json');
-        console.log('Descripciones de códigos:', codesDescriptions);
-
+        
+        // Leer el archivo Excel
         const reader = new FileReader();
         reader.onload = function(event) {
             const data = new Uint8Array(event.target.result);
@@ -48,8 +39,6 @@ async function processFile() {
 
             // Filtrar las filas según el listado de códigos a remover
             jsonData = jsonData.filter(row => {
-                console.log('Códigos a remover:', codesToRemove);
-                console.log('Código de la fila:', row.Codigo);
                 // Comparar los códigos después de eliminar espacios en blanco adicionales
                 return !codesToRemove.includes(row.Codigo.trim());
             });
@@ -95,5 +84,20 @@ async function processFile() {
     } catch (error) {
         console.error('Error processing file:', error);
         // Puedes mostrar un mensaje de error al usuario si lo deseas
+    }
+}
+
+async function loadJSONFromAirtable(viewName) {
+    try {
+        const url = `https://api.airtable.com/v0/app4fXaIH5R6dmaY7/${viewName}?api_key=patuBqD5kRmv5Czb3.3606ec1cb081893073bc5ad358268413b886eb0a5ed1be2bf6e4e1c91d127a42`;
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error(`Failed to load JSON from Airtable view ${viewName}: ${response.statusText}`);
+        }
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error(`Error loading JSON from Airtable view ${viewName}:`, error);
+        throw error;
     }
 }

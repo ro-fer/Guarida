@@ -1,16 +1,20 @@
-const API_KEY = 'patqARlOhK2LnaM7q.1e39f34db2fa28d069ec122a5797149cdcecf5534f57b13d22d2509be5bb468d';
+const API_KEY = 'patuBqD5kRmv5Czb3.3606ec1cb081893073bc5ad358268413b886eb0a5ed1be2bf6e4e1c91d127a42';
 const BASE_ID = 'app4fXaIH5R6dmaY7';
+
 async function loadJSONFromAirtable(viewName) {
     try {
-        const url = `https://api.airtable.com/v0/${BASE_ID}/${viewName}?api_key=${API_KEY}`;
-        const response = await fetch(url);
+        const url = `https://api.airtable.com/v0/${BASE_ID}/${viewName}`;
+        const response = await fetch(url, {
+            headers: {
+                'Authorization': `Bearer ${API_KEY}`
+            }
+        });
         if (!response.ok) {
             throw new Error(`Failed to load JSON from Airtable view ${viewName}: ${response.statusText}`);
         }
         const data = await response.json();
         return data;
     } catch (error) {
-        console.log('Pruebaaaa');
         console.error(`Error loading JSON from Airtable view ${viewName}:`, error);
         throw error;
     }
@@ -32,11 +36,8 @@ async function processFile() {
 
         // Cargar los datos de Airtable
         const TABLE_NAME = 'Otros_Codigos';
-        console.log('Pruebaaaa');
         const jsonCodesDescriptions = await loadJSONFromAirtable('Codigos_Tazas');
-        console.log('Pruebaaaa');
         const jsonCodesToRemove = await loadJSONFromAirtable(TABLE_NAME);
-       
 
         // Extraer los arrays de códigos y descripciones
         const codesToRemove = Object.values(jsonCodesToRemove)[0];
@@ -46,7 +47,6 @@ async function processFile() {
             descripcion: row['Localizacion para sistema']
         }));
 
-        
         // Leer el archivo Excel
         const reader = new FileReader();
         reader.onload = function(event) {

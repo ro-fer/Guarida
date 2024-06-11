@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subir Codigos Nuevos</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./estilos.css" />
+    <!-- Incluye los scripts de XLSX -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+    <!-- Incluye el script principal -->
+    <script defer src="modificar-airtable-cod-quitar.js"></script>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="index.html">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="subircodigo.html">Codigos de Nuevas Tazas</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="quitarcodigo.html">Codigos a sacar</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+    <h1>Subir codigos de productos que no son tazas</h1>
+    <p>Descarga la plantilla de Excel:</p>
+    <a href="plantillaCodigosNuevosOtrosProductos.xls" download>Descargar Plantilla</a>
+    <br><br>
+    <input type="file" id="fileInput">
+    <button onclick="processExcel()">Procesar Excel</button>
+    <ul id="dataList"></ul>
+</body>
+</html>

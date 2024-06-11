@@ -1,6 +1,6 @@
 const TOKEN = 'patuBqD5kRmv5Czb3.3606ec1cb081893073bc5ad358268413b886eb0a5ed1be2bf6e4e1c91d127a42';
 const BASE_ID = 'app4fXaIH5R6dmaY7';
-const TABLE_NAME = 'Codigos_Tazas';
+const TABLE_NAME = 'Otros_Codigos';
 
 // Función para procesar el archivo de Excel
 function processExcel() {
@@ -27,22 +27,15 @@ function processExcel() {
 // Función para actualizar Airtable
 async function updateAirtable(data) {
     for (let row of data) {
-        const inicio = row['Inicio']; // Agregar columna "Inicio"
         const codigoWeb = row['Codigo de la web'];
-        const codigoWebSinEspacios = row['Codigo de la web sin espacios'];
-        const formato = row['Formato'];
-        const localizacion = row['Localizacion para sistema'];
 
         await createRecord({
-            'Inicio': inicio, // Agregar columna "Inicio"
-            'Codigo de la web': codigoWeb,
-            'Codigo de la web sin espacios': codigoWebSinEspacios,
-            'Formato': formato,
-            'Localizacion para sistema': localizacion
+            'Codigo de la web': codigoWeb
         });
     }
     alert('Datos actualizados con éxito');
 }
+
 
 async function createRecord(fields) {
     const url = `https://api.airtable.com/v0/${BASE_ID}/${TABLE_NAME}`;

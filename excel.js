@@ -1,6 +1,8 @@
+const API_KEY = 'patqARlOhK2LnaM7q.1e39f34db2fa28d069ec122a5797149cdcecf5534f57b13d22d2509be5bb468d';
+const BASE_ID = 'app4fXaIH5R6dmaY7';
 async function loadJSONFromAirtable(viewName) {
     try {
-        const url = `https://api.airtable.com/v0/app4fXaIH5R6dmaY7/${viewName}?api_key=patqARlOhK2LnaM7q.1e39f34db2fa28d069ec122a5797149cdcecf5534f57b13d22d2509be5bb468d`;
+        const url = `https://api.airtable.com/v0/${BASE_ID}/${viewName}?api_key=${API_KEY}`;
         const response = await fetch(url);
         if (!response.ok) {
             throw new Error(`Failed to load JSON from Airtable view ${viewName}: ${response.statusText}`);

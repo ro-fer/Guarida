@@ -74,6 +74,16 @@ async function processFile() {
                 // Comparar los códigos después de eliminar espacios en blanco adicionales
                 return !codesToRemove.includes(row.Codigo.trim());
             });
+            // Crear un único vector con repeticiones según la cantidad de los códigos
+const codigos_sirven = [];
+
+// Iterar sobre cada fila en jsonData
+jsonData.forEach(row => {
+    // Agregar la cantidad especificada de cada código al array
+    for (let i = 0; i < row.Cantidad; i++) {
+        codigos_sirven.push(row.Codigo.trim());
+    }
+});
 
            // Crear un único vector con repeticiones según la cantidad de los códigos
 // Generar las descripciones finales

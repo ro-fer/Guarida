@@ -75,30 +75,40 @@ async function processFile() {
                 return !codesToRemove.includes(row.Codigo.trim());
             });
 
-            // Crear un único vector con repeticiones según la cantidad de los códigos
-            const codigos_sirven = [];
+           // Crear un único vector con repeticiones según la cantidad de los códigos
+const codigos_sirven = [];
 
-            // Iterar sobre cada fila en jsonData
-            jsonData.forEach(row => {
-                // Agregar la cantidad especificada de cada código al array
-                for (let i = 0; i < row.Cantidad; i++) {
-                    codigos_sirven.push(row.Codigo.trim());
-                }
-            });
+// Iterar sobre cada fila en jsonData
+jsonData.forEach(row => {
+    // Agregar la cantidad especificada de cada código al array
+    for (let i = 0; i < row.Cantidad; i++) {
+        codigos_sirven.push(row.Codigo.trim());
+    }
+});
 
-            // Verificar la cantidad de elementos en codigos_sirven
-            const cantidadElementos = codigos_sirven.length;
+// Verificar la cantidad de elementos en codigos_sirven
+const cantidadElementos = codigos_sirven.length;
 
-            // Si la cantidad de elementos es impar, agregar el valor especificado
-            if (cantidadElementos % 2 !== 0) {
-                codigos_sirven.push('/Users/karenlopezfranz/Desktop/CarpetaMadre/impar.png');
-            }
+// Si la cantidad de elementos es impar, agregar el valor especificado al final
+if (cantidadElementos % 2 !== 0) {
+    codigos_sirven.push('/Users/karenlopezfranz/Desktop/CarpetaMadre/impar.png');
+}
 
-            // Generar las descripciones finales
-            const descripciones = codigos_sirven.map(codigo => {
-                const descripcion = descripcionMap.get(codigo);
-                return descripcion ? descripcion : '/Users/karenlopezfranz/Desktop/CarpetaMadre/sin_descripcion.png';
-            });
+// Generar las descripciones finales
+let descripciones = codigos_sirven.map(codigo => {
+    const descripcion = descripcionMap.get(codigo);
+    return descripcion ? descripcion : '/Users/karenlopezfranz/Desktop/CarpetaMadre/sin_descripcion.png';
+});
+
+// Eliminar todas las instancias de '/Users/karenlopezfranz/Desktop/CarpetaMadre/sin_descripcion.png'
+descripciones = descripciones.filter(descripcion => descripcion !== '/Users/karenlopezfranz/Desktop/CarpetaMadre/sin_descripcion.png');
+
+// Si el último elemento es '/Users/karenlopezfranz/Desktop/CarpetaMadre/impar.png' y no tiene descripción, 
+// asegurarse de que esté al final del array de descripciones
+if (descripciones[descripciones.length - 1] === '/Users/karenlopezfranz/Desktop/CarpetaMadre/impar.png' && !descripcionMap.has(descripciones[descripciones.length - 1])) {
+    descripciones.push('/Users/karenlopezfranz/Desktop/CarpetaMadre/impar.png');
+}
+
 
             // Mostrar el resultado final en la consola
             console.log("Descripciones finales:", descripciones);

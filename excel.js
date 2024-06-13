@@ -70,17 +70,28 @@ async function processFile() {
             });
 
             // Crear un único vector con repeticiones según la cantidad de los códigos
-            const codigos_sirven = [];
-            jsonData.forEach(row => {
-                for (let i = 0; i < row.Cantidad; i++) {
-                    codigos_sirven.push(row.Codigo);
-                }
-            });
-            console.log(codigos_sirven.lengt);
-            // Verificar si la cantidad de codigos_sirven es impar y agregar el valor si es necesario
-            if (codigos_sirven.length % 2 !== 0) {
-                codigos_sirven.push('/Users/karenlopezfranz/Desktop/CarpetaMadre/impar.png');
-            }
+            // Inicializar el array para almacenar los códigos
+const codigos_sirven = [];
+
+// Iterar sobre cada fila en jsonData
+jsonData.forEach(row => {
+    // Agregar la cantidad especificada de cada código al array
+    for (let i = 0; i < row.Cantidad; i++) {
+        codigos_sirven.push(row.Codigo);
+    }
+});
+
+// Verificar la cantidad de elementos en codigos_sirven
+const cantidadElementos = codigos_sirven.length;
+
+// Si la cantidad de elementos es impar, agregar el valor especificado
+if (cantidadElementos % 2 !== 0) {
+    codigos_sirven.push('/Users/karenlopezfranz/Desktop/CarpetaMadre/impar.png');
+}
+
+// Ahora codigos_sirven debería tener el elemento adicional si su longitud era impar
+console.log(codigos_sirven);
+
 
 
             // Reemplazar los códigos por sus descripciones

@@ -95,15 +95,16 @@ async function processFile() {
             }
 
             // Reemplazar los códigos por sus descripciones, evitando elementos vacíos
-            const descripciones = codigos_sirven.reduce((acc, codigo) => {
+            const descripciones = [];
+            for (let i = 0; i < codigos_sirven.length; i++) {
+                const codigo = codigos_sirven[i];
                 const descripcion = descripcionMap.get(codigo);
-                if (descripcion) {
-                    acc.push(descripcion);
+                if (i === codigos_sirven.length - 1 && cantidadElementos % 2 !== 0 && !descripcion) {
+                    descripciones.push('/Users/karenlopezfranz/Desktop/CarpetaMadre/impar.png');
                 } else {
-                    acc.push('/Users/karenlopezfranz/Desktop/CarpetaMadre/sin_descripcion.png');
+                    descripciones.push(descripcion ? descripcion : '/Users/karenlopezfranz/Desktop/CarpetaMadre/sin_descripcion.png');
                 }
-                return acc;
-            }, []);
+            }
 
             // Mostrar el resultado final en la consola
             console.log("Descripciones finales:", descripciones);

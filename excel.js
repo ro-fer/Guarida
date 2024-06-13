@@ -51,6 +51,12 @@ async function processFile() {
             descripcion: record.fields['Localizacion para sistema']
         }));
 
+        // Crear un mapa de descripciones para una búsqueda rápida
+        const descripcionMap = new Map();
+        codesDescriptions.forEach(item => {
+            descripcionMap.set(item.codigo, item.descripcion);
+        });
+
         // Leer el archivo Excel
         const reader = new FileReader();
         reader.onload = function(event) {
@@ -90,8 +96,8 @@ async function processFile() {
 
             // Reemplazar los códigos por sus descripciones
             const descripciones = codigos_sirven.map(codigo => {
-                const descripcionObj = codesDescriptions.find(item => item.codigo === codigo);
-                return descripcionObj ? descripcionObj.descripcion : '';
+                const descripcion = descripcionMap.get(codigo);
+                return descripcion ? descripcion : '/Users/karenlopezfranz/Desktop/CarpetaMadre/sin_descripcion.png';
             });
 
             // Mostrar el resultado final en la consola
@@ -130,3 +136,4 @@ async function processFile() {
         // Puedes mostrar un mensaje de error al usuario si lo deseas
     }
 }
+

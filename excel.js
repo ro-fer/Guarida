@@ -70,39 +70,33 @@ async function processFile() {
             });
 
             // Crear un único vector con repeticiones según la cantidad de los códigos
-            // Inicializar el array para almacenar los códigos
-// Inicializar el array para almacenar los códigos
-const codigos_sirven = [];
+            const codigos_sirven = [];
 
-// Iterar sobre cada fila en jsonData
-jsonData.forEach(row => {
-    // Agregar la cantidad especificada de cada código al array
-    for (let i = 0; i < row.Cantidad; i++) {
-        codigos_sirven.push(row.Codigo);
-    }
-});
+            // Iterar sobre cada fila en jsonData
+            jsonData.forEach(row => {
+                // Agregar la cantidad especificada de cada código al array
+                for (let i = 0; i < row.Cantidad; i++) {
+                    codigos_sirven.push(row.Codigo.trim());
+                }
+            });
 
-// Verificar la cantidad de elementos en codigos_sirven
-const cantidadElementos = codigos_sirven.length;
+            // Verificar la cantidad de elementos en codigos_sirven
+            const cantidadElementos = codigos_sirven.length;
 
-// Si la cantidad de elementos es impar, agregar el valor especificado
-if (cantidadElementos % 2 !== 0) {
-    codigos_sirven.push('/Users/karenlopezfranz/Desktop/CarpetaMadre/impar.png');
-}
-
-// Mostrar el resultado final en la consola
-console.log(codigos_sirven);
-console.log("Cantidad de elementos:", codigos_sirven.length);
-
-// Verificar si hay elementos vacíos o undefined en el array
-const elementosVacios = codigos_sirven.filter(elemento => elemento === undefined || elemento === null || elemento === '');
-console.log("Elementos vacíos o undefined:", elementosVacios.length);
+            // Si la cantidad de elementos es impar, agregar el valor especificado
+            if (cantidadElementos % 2 !== 0) {
+                codigos_sirven.push('/Users/karenlopezfranz/Desktop/CarpetaMadre/impar.png');
+            }
 
             // Reemplazar los códigos por sus descripciones
             const descripciones = codigos_sirven.map(codigo => {
                 const descripcionObj = codesDescriptions.find(item => item.codigo === codigo);
                 return descripcionObj ? descripcionObj.descripcion : '';
             });
+
+            // Mostrar el resultado final en la consola
+            console.log("Descripciones finales:", descripciones);
+            console.log("Cantidad de descripciones:", descripciones.length);
 
             // Crear newData para almacenar las descripciones en las columnas "Imagen 1" y "Imagen 2"
             const newData = [];

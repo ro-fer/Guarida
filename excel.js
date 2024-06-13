@@ -99,15 +99,7 @@ let descripciones = codigos_sirven.map(codigo => {
     const descripcion = descripcionMap.get(codigo);
     return descripcion;
 });
-
-// Si el último elemento es '/Users/karenlopezfranz/Desktop/CarpetaMadre/impar.png' y no tiene descripción, 
-// asegurarse de que esté al final del array de descripciones
-if (descripciones[descripciones.length - 1] === '/Users/karenlopezfranz/Desktop/CarpetaMadre/impar.png' && !descripcionMap.has(descripciones[descripciones.length - 1])) {
-    descripciones.push('/Users/karenlopezfranz/Desktop/CarpetaMadre/impar.png');
-}
-
-
-            // Mostrar el resultado final en la consola
+         // Mostrar el resultado final en la consola
             console.log("Descripciones finales:", descripciones);
             console.log("Cantidad de descripciones:", descripciones.length);
 

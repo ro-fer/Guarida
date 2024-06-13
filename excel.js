@@ -71,6 +71,7 @@ async function processFile() {
 
             // Crear un único vector con repeticiones según la cantidad de los códigos
             // Inicializar el array para almacenar los códigos
+// Inicializar el array para almacenar los códigos
 const codigos_sirven = [];
 
 // Iterar sobre cada fila en jsonData
@@ -79,18 +80,23 @@ jsonData.forEach(row => {
     for (let i = 0; i < row.Cantidad; i++) {
         codigos_sirven.push(row.Codigo);
     }
-    const cantidadElementos = codigos_sirven.length;
+});
+
+// Verificar la cantidad de elementos en codigos_sirven
+const cantidadElementos = codigos_sirven.length;
 
 // Si la cantidad de elementos es impar, agregar el valor especificado
 if (cantidadElementos % 2 !== 0) {
     codigos_sirven.push('/Users/karenlopezfranz/Desktop/CarpetaMadre/impar.png');
 }
-});
 
-// Ahora codigos_sirven debería tener el elemento adicional si su longitud era impar
+// Mostrar el resultado final en la consola
 console.log(codigos_sirven);
+console.log("Cantidad de elementos:", codigos_sirven.length);
 
-
+// Verificar si hay elementos vacíos o undefined en el array
+const elementosVacios = codigos_sirven.filter(elemento => elemento === undefined || elemento === null || elemento === '');
+console.log("Elementos vacíos o undefined:", elementosVacios.length);
 
             // Reemplazar los códigos por sus descripciones
             const descripciones = codigos_sirven.map(codigo => {

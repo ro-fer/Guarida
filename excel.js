@@ -79,15 +79,13 @@ jsonData.forEach(row => {
     for (let i = 0; i < row.Cantidad; i++) {
         codigos_sirven.push(row.Codigo);
     }
-});
-
-// Verificar la cantidad de elementos en codigos_sirven
-const cantidadElementos = codigos_sirven.length;
+    const cantidadElementos = codigos_sirven.length;
 
 // Si la cantidad de elementos es impar, agregar el valor especificado
 if (cantidadElementos % 2 !== 0) {
     codigos_sirven.push('/Users/karenlopezfranz/Desktop/CarpetaMadre/impar.png');
 }
+});
 
 // Ahora codigos_sirven debería tener el elemento adicional si su longitud era impar
 console.log(codigos_sirven);

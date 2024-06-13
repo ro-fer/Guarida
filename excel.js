@@ -97,11 +97,8 @@ if (cantidadElementos % 2 !== 0) {
 // Generar las descripciones finales
 let descripciones = codigos_sirven.map(codigo => {
     const descripcion = descripcionMap.get(codigo);
-    return descripcion ? descripcion : '/Users/karenlopezfranz/Desktop/CarpetaMadre/sin_descripcion.png';
+    return descripcion;
 });
-
-// Eliminar todas las instancias de '/Users/karenlopezfranz/Desktop/CarpetaMadre/sin_descripcion.png'
-descripciones = descripciones.filter(descripcion => descripcion !== '/Users/karenlopezfranz/Desktop/CarpetaMadre/sin_descripcion.png');
 
 // Si el último elemento es '/Users/karenlopezfranz/Desktop/CarpetaMadre/impar.png' y no tiene descripción, 
 // asegurarse de que esté al final del array de descripciones

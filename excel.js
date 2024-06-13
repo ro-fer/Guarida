@@ -79,15 +79,12 @@ async function processFile() {
 // Generar las descripciones finales
 let descripciones = codigos_sirven.map(codigo => {
     const descripcion = descripcionMap.get(codigo);
-    return descripcion !== undefined ? descripcion : null; // Retorna null si no hay descripción válida
+    return descripcion !== undefined ? descripcion : '/Users/karenlopezfranz/Desktop/CarpetaMadre/impar.png';
 });
-
-// Filtrar las descripciones nulas (que no tienen descripción válida)
-descripciones = descripciones.filter(descripcion => descripcion !== null);
 
 // Si el último elemento es '/Users/karenlopezfranz/Desktop/CarpetaMadre/impar.png' y no tiene descripción,
 // asegurarse de que esté al final del array de descripciones
-if (descripciones.length % 2 !== 0) {
+if (descripciones.length % 2 !== 0 && descripciones[descripciones.length - 1] === '/Users/karenlopezfranz/Desktop/CarpetaMadre/impar.png') {
     descripciones.push('/Users/karenlopezfranz/Desktop/CarpetaMadre/impar.png');
 }
 
@@ -100,19 +97,21 @@ const newData = [];
 for (let i = 0; i < descripciones.length; i += 2) {
     const descripcion1 = descripciones[i];
     const descripcion2 = descripciones[i + 1];
-    // Añadir solo si hay descripción válida
-    if (descripcion1 !== undefined && descripcion2 !== undefined) {
-        newData.push({
-            "Imagen 1": descripcion1,
-            "Imagen 2": descripcion2
-        });
-    }
+    newData.push({
+        "Imagen 1": descripcion1,
+        "Imagen 2": descripcion2
+    });
 }
+
+// Eliminar filas donde ambas imágenes son '/Users/karenlopezfranz/Desktop/CarpetaMadre/impar.png'
+const filteredData = newData.filter(row => {
+    return !(row["Imagen 1"] === '/Users/karenlopezfranz/Desktop/CarpetaMadre/impar.png' && row["Imagen 2"] === '/Users/karenlopezfranz/Desktop/CarpetaMadre/impar.png');
+});
 
 // Generar el archivo CSV
 let csvContent = "data:text/csv;charset=utf-8,";
 csvContent += "Imagen1,Imagen2\n"; // Aquí se cambió "Imagen 1" y "Imagen 2"
-newData.forEach(row => {
+filteredData.forEach(row => {
     csvContent += `${row["Imagen 1"]},${row["Imagen 2"]}\n`; // Aquí se cambió "Imagen 1" y "Imagen 2"
 });
 
@@ -123,6 +122,7 @@ downloadLink.href = encodedUri;
 downloadLink.download = `pedido_mayorista_${clientName}.csv`;
 downloadLink.style.display = 'block';
 downloadLink.innerText = 'Archivo terminado!';
+
 
         };
         reader.readAsArrayBuffer(file);

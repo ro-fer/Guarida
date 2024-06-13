@@ -101,7 +101,9 @@ async function processFile() {
                 const descripcion = descripcionMap.get(codigo);
                 if (i === codigos_sirven.length - 1 && cantidadElementos % 2 !== 0 && !descripcion) {
                     descripciones.push('/Users/karenlopezfranz/Desktop/CarpetaMadre/impar.png');
-                } 
+                } else {
+                    descripciones.push(descripcion ? descripcion : '/Users/karenlopezfranz/Desktop/CarpetaMadre/sin_descripcion.png');
+                }
             }
 
             // Mostrar el resultado final en la consola

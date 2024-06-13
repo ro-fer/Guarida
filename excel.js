@@ -88,12 +88,12 @@ async function processFile() {
             let descripciones = codigos_sirven.map(codigo => {
                 const descripcion = descripcionMap.get(codigo);
                 // Si no se encuentra una descripción para el código, usar la imagen impar por defecto
-                return descripcion !== undefined ? descripcion : '/Users/karenlopezfranz/Desktop/CarpetaMadre/impar.png';
+                return descripcion !== undefined ? descripcion : '/Users/karenlopezfranz/Desktop/Carpeta Madre/impar.png';
             });
 
             // Asegurarse de que haya un número par de descripciones
             if (descripciones.length % 2 !== 0) {
-                descripciones.push('/Users/karenlopezfranz/Desktop/CarpetaMadre/impar.png');
+                descripciones.push('/Users/karenlopezfranz/Desktop/Carpeta Madre/impar.png');
             }
 
             // Mostrar las descripciones finales en la consola
@@ -113,7 +113,7 @@ async function processFile() {
 
             // Eliminar filas donde ambas imágenes sean '/Users/karenlopezfranz/Desktop/CarpetaMadre/impar.png'
             const filteredData = newData.filter(row => {
-                return !(row["Imagen 1"] === '/Users/karenlopezfranz/Desktop/CarpetaMadre/impar.png' && row["Imagen 2"] === '/Users/karenlopezfranz/Desktop/CarpetaMadre/impar.png');
+                return !(row["Imagen 1"] === '/Users/karenlopezfranz/Desktop/Carpeta Madre/impar.png' && row["Imagen 2"] === '/Users/karenlopezfranz/Desktop/Carpeta Madre/impar.png');
             });
 
             // Generar el contenido CSV

@@ -77,6 +77,12 @@ async function processFile() {
                 }
             });
 
+            // Verificar si la cantidad de codigos_sirven es impar y agregar el valor si es necesario
+            if (codigos_sirven.length % 2 !== 0) {
+                codigos_sirven.push('/Users/karenlopezfranz/Desktop/CarpetaMadre/impar.png');
+            }
+
+
             // Reemplazar los códigos por sus descripciones
             const descripciones = codigos_sirven.map(codigo => {
                 const descripcionObj = codesDescriptions.find(item => item.codigo === codigo);

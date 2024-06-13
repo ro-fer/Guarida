@@ -76,7 +76,7 @@ async function processFile() {
                     codigos_sirven.push(row.Codigo);
                 }
             });
-
+            console.log(codigos_sirven.lengt);
             // Verificar si la cantidad de codigos_sirven es impar y agregar el valor si es necesario
             if (codigos_sirven.length % 2 !== 0) {
                 codigos_sirven.push('/Users/karenlopezfranz/Desktop/CarpetaMadre/impar.png');

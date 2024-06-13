@@ -76,58 +76,54 @@ async function processFile() {
             });
 
            // Crear un único vector con repeticiones según la cantidad de los códigos
-const codigos_sirven = [];
-
-// Iterar sobre cada fila en jsonData
-jsonData.forEach(row => {
-    // Agregar la cantidad especificada de cada código al array
-    for (let i = 0; i < row.Cantidad; i++) {
-        codigos_sirven.push(row.Codigo.trim());
-    }
-});
-
-// Verificar la cantidad de elementos en codigos_sirven
-const cantidadElementos = codigos_sirven.length;
-
-// Si la cantidad de elementos es impar, agregar el valor especificado al final
-if (cantidadElementos % 2 !== 0) {
-    codigos_sirven.push('/Users/karenlopezfranz/Desktop/CarpetaMadre/impar.png');
-}
-
 // Generar las descripciones finales
 let descripciones = codigos_sirven.map(codigo => {
     const descripcion = descripcionMap.get(codigo);
-    return descripcion;
+    return descripcion !== undefined ? descripcion : null; // Retorna null si no hay descripción válida
 });
-         // Mostrar el resultado final en la consola
-            console.log("Descripciones finales:", descripciones);
-            console.log("Cantidad de descripciones:", descripciones.length);
 
-            // Crear newData para almacenar las descripciones en las columnas "Imagen 1" y "Imagen 2"
-            const newData = [];
-            for (let i = 0; i < descripciones.length; i += 2) {
-                const descripcion1 = descripciones[i] || '';
-                const descripcion2 = descripciones[i + 1] || '';
-                newData.push({
-                    "Imagen 1": descripcion1,
-                    "Imagen 2": descripcion2
-                });
-            }
+// Filtrar las descripciones nulas (que no tienen descripción válida)
+descripciones = descripciones.filter(descripcion => descripcion !== null);
 
-            // Generar el archivo CSV
-            let csvContent = "data:text/csv;charset=utf-8,";
-            csvContent += "Imagen1,Imagen2\n"; // Aquí se cambió "Imagen 1" y "Imagen 2"
-            newData.forEach(row => {
-                csvContent += `${row["Imagen 1"]},${row["Imagen 2"]}\n`; // Aquí se cambió "Imagen 1" y "Imagen 2"
-            });
+// Si el último elemento es '/Users/karenlopezfranz/Desktop/CarpetaMadre/impar.png' y no tiene descripción,
+// asegurarse de que esté al final del array de descripciones
+if (descripciones.length % 2 !== 0) {
+    descripciones.push('/Users/karenlopezfranz/Desktop/CarpetaMadre/impar.png');
+}
 
-            // Crear un enlace de descarga para el archivo CSV
-            const encodedUri = encodeURI(csvContent);
-            const downloadLink = document.getElementById('downloadLink');
-            downloadLink.href = encodedUri;
-            downloadLink.download = `pedido_mayorista_${clientName}.csv`;
-            downloadLink.style.display = 'block';
-            downloadLink.innerText = 'Archivo terminado!';
+// Mostrar el resultado final en la consola
+console.log("Descripciones finales:", descripciones);
+console.log("Cantidad de descripciones:", descripciones.length);
+
+// Crear newData para almacenar las descripciones en las columnas "Imagen 1" y "Imagen 2"
+const newData = [];
+for (let i = 0; i < descripciones.length; i += 2) {
+    const descripcion1 = descripciones[i];
+    const descripcion2 = descripciones[i + 1];
+    // Añadir solo si hay descripción válida
+    if (descripcion1 !== undefined && descripcion2 !== undefined) {
+        newData.push({
+            "Imagen 1": descripcion1,
+            "Imagen 2": descripcion2
+        });
+    }
+}
+
+// Generar el archivo CSV
+let csvContent = "data:text/csv;charset=utf-8,";
+csvContent += "Imagen1,Imagen2\n"; // Aquí se cambió "Imagen 1" y "Imagen 2"
+newData.forEach(row => {
+    csvContent += `${row["Imagen 1"]},${row["Imagen 2"]}\n`; // Aquí se cambió "Imagen 1" y "Imagen 2"
+});
+
+// Crear un enlace de descarga para el archivo CSV
+const encodedUri = encodeURI(csvContent);
+const downloadLink = document.getElementById('downloadLink');
+downloadLink.href = encodedUri;
+downloadLink.download = `pedido_mayorista_${clientName}.csv`;
+downloadLink.style.display = 'block';
+downloadLink.innerText = 'Archivo terminado!';
+
         };
         reader.readAsArrayBuffer(file);
     } catch (error) {

@@ -6,7 +6,7 @@
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="estilos.css">
     <title>Armado de Archivo - Guarida</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 </head>
@@ -34,37 +34,28 @@
     <!-- Contenido principal -->
     <div class="container mt-5">
         <h1 class="text-center">Carga y descarga de archivo Excel</h1>
-        <div class="row row-cols-1 row-cols-md-3 g-4 mt-4">
+        <div class="row row-cols-1 row-cols-md-2 g-4 mt-4">
             <!-- Tarjeta de descarga -->
             <div class="col">
                 <div class="card h-100 text-center">
                     <div class="card-body">
                         <h5 class="card-title">Plantilla de Excel</h5>
-                        <a href="plantillaCliente.xlsx" class="btn btn-primary" download>Descarga</a>
+                        <a href="./plantillaCliente.xlsx" class="btn btn-primary" download>Descarga</a>
                     </div>
                 </div>
             </div>
-            <!-- Tarjeta de subida -->
+            <!-- Tarjeta de cliente -->
             <div class="col">
-                <div class="card h-100 text-center">
-                    <div class="card-body">
-                        <h5 class="card-title">Cliente</h5>
-                        <input type="text" id="clientName" class="form-control mb-2" placeholder="Ingrese el nombre del cliente" />
-                        <input type="file" id="fileInput" class="form-control button-archivo" />
-                    </div>
+            <div class="card h-100 text-center shadow-sm rounded">
+                <div class="card-body">
+                    <h5 class="card-title">Cliente</h5>
+                    <input type="text" id="clientName" class="form-control mb-3" placeholder="Ingrese el nombre del cliente" />
+                    <input type="file" id="fileInput" class="form-control mb-3" />
+                    <button class="btn btn-success mb-2" onclick="processFile()">Archivo Nuevo</button>
+                    <a id="downloadLink" class="btn btn-secondary mt-2" style="display: none;">Download Processed File</a>
                 </div>
             </div>
-            <!-- Tarjeta de procesamiento -->
-            <div class="col">
-                <div class="card h-100 text-center">
-                    <div class="card-body">
-                        <h5 class="card-title">Cliente</h5>
-                        <button class="btn btn-success mb-2" onclick="processFile()">Archivo Nuevo</button>
-                        <a id="downloadLink" class="btn btn-secondary" style="display: none;">Download Processed File</a>
-                    </div>
-                </div>
-            </div>
-        </div>
+        
     </div>
 
     <footer> </footer>
